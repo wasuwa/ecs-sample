@@ -6,6 +6,9 @@
 ## プロジェクト概要
 ECSで構築するWeb APIサーバー
 
+## 命名規則
+- AWSリソースの命名規則は`web-api-{env}`をベースにしてください。`{env}`には`stg`や`prod`などの環境名を入れます。
+
 ## ディレクトリ構造
 Terraform関連のファイルは、`README.md`と`docs/`を除いて`terraform/`配下に集約し、ルートモジュールと再利用モジュールを分離する構成を推奨します。
 
@@ -96,5 +99,32 @@ Terraform関連のファイルは、`README.md`と`docs/`を除いて`terraform/
 - `terraform/environments/*`: 環境ごとのCIDR、Desired Count、ドメイン名、Stateバックエンド設定
 
 ## コマンド
-- format: `terraform fmt -recursive terraform`
-- lint: `tflint --recursive --chdir=terraform`
+### init
+```bash
+terraform -chdir=terraform/environments/stg init -backend-config=backend.hcl
+```
+
+### plan
+```bash
+terraform -chdir=terraform/environments/stg plan -var-file=terraform.tfvars
+```
+
+### apply
+```bash
+terraform -chdir=terraform/environments/stg apply -var-file=terraform.tfvars
+```
+
+### validate
+```bash
+terraform -chdir=terraform/environments/stg validate
+```
+
+### format
+```bash
+terraform fmt -recursive terraform
+```
+
+### lint
+```bash
+tflint --recursive --chdir=terraform
+```
