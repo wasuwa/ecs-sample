@@ -1,8 +1,11 @@
 ENV ?= stg
+AWS_PROFILE ?= web-api-$(ENV)
 TF_ROOT := terraform
 TF_ENV_DIR := $(TF_ROOT)/environments/$(ENV)
 TF_VARS_FILE := terraform.tfvars
 BACKEND_FILE := backend.hcl
+
+export AWS_PROFILE
 
 .PHONY: init plan apply validate fmt lint
 
