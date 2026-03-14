@@ -99,32 +99,12 @@ Terraform関連のファイルは、`README.md`と`docs/`を除いて`terraform/
 - `terraform/environments/*`: 環境ごとのCIDR、Desired Count、ドメイン名、Stateバックエンド設定
 
 ## コマンド
-### init
-```bash
-terraform -chdir=terraform/environments/stg init -backend-config=backend.hcl
+### ログイン
+```zsh
+aws login --profile web-api-stg
 ```
 
-### plan
-```bash
-terraform -chdir=terraform/environments/stg plan -var-file=terraform.tfvars
-```
-
-### apply
-```bash
-terraform -chdir=terraform/environments/stg apply -var-file=terraform.tfvars
-```
-
-### validate
-```bash
-terraform -chdir=terraform/environments/stg validate
-```
-
-### format
-```bash
-terraform fmt -recursive terraform
-```
-
-### lint
-```bash
-tflint --recursive --chdir=terraform
+### 環境切り替え
+```zsh
+make plan ENV=prod
 ```
