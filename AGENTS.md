@@ -101,7 +101,7 @@ Terraform関連のファイルは、`README.md`と`docs/`を除いて`terraform/
 ## コマンド
 ### ログイン
 ```zsh
-aws login --profile web-api-stg
+aws sso login --profile web-api-stg
 ```
 
 ### 環境切り替え
