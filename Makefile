@@ -7,7 +7,10 @@ BACKEND_FILE := backend.hcl
 
 export AWS_PROFILE
 
-.PHONY: init plan apply validate fmt lint
+.PHONY: login init plan apply validate fmt lint
+
+login:
+	aws sso login --profile $(AWS_PROFILE)
 
 init:
 	terraform -chdir=$(TF_ENV_DIR) init -backend-config=$(BACKEND_FILE)

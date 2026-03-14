@@ -99,10 +99,6 @@ Terraform関連のファイルは、`README.md`と`docs/`を除いて`terraform/
 - `terraform/environments/*`: 環境ごとのCIDR、Desired Count、ドメイン名、Stateバックエンド設定
 
 ## コマンド
-### ログイン
-```zsh
-aws sso login --profile web-api-stg
-```
 
 ### 環境切り替え
 ```zsh
