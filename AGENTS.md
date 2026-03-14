@@ -94,3 +94,7 @@ Terraform関連のファイルは、`README.md`と`docs/`を除いて`terraform/
 - `terraform/modules/alb`: ALB、listener、target group
 - `terraform/modules/ecs_service`: ECS cluster、task definition、service、task role、log group
 - `terraform/environments/*`: 環境ごとのCIDR、Desired Count、ドメイン名、Stateバックエンド設定
+
+## コマンド
+- format: `terraform fmt -recursive terraform`
+- lint: `tflint --recursive --chdir=terraform`
