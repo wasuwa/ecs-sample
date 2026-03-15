@@ -1,0 +1,40 @@
+{
+  "family": "web-api-stg",
+  "networkMode": "awsvpc",
+  "requiresCompatibilities": ["FARGATE"],
+  "runtimePlatform": {
+    "operatingSystemFamily": "LINUX"
+  },
+  "cpu": "256",
+  "memory": "512",
+  "executionRoleArn": "{{ tfstate `module.service.aws_iam_role.execution.arn` }}",
+  "taskRoleArn": "{{ tfstate `module.service.aws_iam_role.task.arn` }}",
+  "containerDefinitions": [
+    {
+      "name": "backend",
+      "essential": true,
+      "image": "{{ tfstate `module.ecr.aws_ecr_repository.main.repository_url` }}:{{ must_env `IMAGE_TAG` }}",
+      "readonlyRootFilesystem": true,
+      "environment": [
+        {
+          "name": "PORT",
+          "value": "8080"
+        }
+      ],
+      "portMappings": [
+        {
+          "containerPort": 8080,
+          "protocol": "tcp"
+        }
+      ],
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "{{ tfstate `module.service.aws_cloudwatch_log_group.main.name` }}",
+          "awslogs-region": "ap-northeast-1",
+          "awslogs-stream-prefix": "backend"
+        }
+      }
+    }
+  ]
+}

@@ -23,6 +23,16 @@ variable "enable_container_insights" {
   type        = bool
 }
 
+variable "container_port" {
+  description = "アプリケーションコンテナの待受ポート"
+  type        = number
+}
+
+variable "health_check_path" {
+  description = "ALBターゲットグループのヘルスチェックパス"
+  type        = string
+}
+
 variable "vpc_cidr_block" {
   description = "VPCのCIDRブロック"
   type        = string

@@ -1,0 +1,24 @@
+{
+  "serviceName": "web-api-stg-service",
+  "launchType": "FARGATE",
+  "desiredCount": 1,
+  "networkConfiguration": {
+    "awsvpcConfiguration": {
+      "subnets": [
+        "{{ tfstate `module.vpc.aws_subnet.main[\"app-a\"].id` }}",
+        "{{ tfstate `module.vpc.aws_subnet.main[\"app-c\"].id` }}"
+      ],
+      "securityGroups": [
+        "{{ tfstate `module.service.aws_security_group.main.id` }}"
+      ],
+      "assignPublicIp": "DISABLED"
+    }
+  },
+  "loadBalancers": [
+    {
+      "targetGroupArn": "{{ tfstate `module.alb.aws_lb_target_group.main.arn` }}",
+      "containerName": "backend",
+      "containerPort": 8080
+    }
+  ]
+}

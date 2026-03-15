@@ -1,0 +1,10 @@
+region: ap-northeast-1
+cluster: web-api-stg-cluster
+service: web-api-stg-service
+service_definition: service-def.json
+task_definition: task-def.json
+timeout: 10m
+plugins:
+  - name: tfstate
+    config:
+      url: s3://web-api-stg-terraform-tfstate/stg/terraform.tfstate
