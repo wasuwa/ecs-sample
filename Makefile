@@ -1,13 +1,14 @@
 ENV ?= stg
 AWS_PROFILE ?= web-api-$(ENV)
 TF_ROOT := terraform
+TF_MODULES_DIR := $(TF_ROOT)/modules
 TF_ENV_DIR := $(TF_ROOT)/environments/$(ENV)
 TF_VARS_FILE := terraform.tfvars
 BACKEND_FILE := backend.hcl
 
 export AWS_PROFILE
 
-.PHONY: login init plan apply validate fmt lint
+.PHONY: login init plan apply validate fmt lint docs
 
 login:
 	aws sso login --profile $(AWS_PROFILE)
@@ -29,3 +30,10 @@ fmt:
 
 lint:
 	tflint --recursive --chdir=$(TF_ROOT)
+
+docs:
+	for module in $(TF_MODULES_DIR)/*; do \
+		if [ -d "$$module" ]; then \
+			terraform-docs markdown table --output-file README.md --output-mode replace "$$module"; \
+		fi; \
+	done
