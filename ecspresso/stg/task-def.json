@@ -3,6 +3,7 @@
   "networkMode": "awsvpc",
   "requiresCompatibilities": ["FARGATE"],
   "runtimePlatform": {
+    "cpuArchitecture": "AMD64",
     "operatingSystemFamily": "LINUX"
   },
   "cpu": "256",
