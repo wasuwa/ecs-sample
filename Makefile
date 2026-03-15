@@ -8,7 +8,7 @@ BACKEND_FILE := backend.hcl
 
 export AWS_PROFILE
 
-.PHONY: login init plan apply validate fmt lint docs
+.PHONY: login init plan apply validate fmt lint docs check
 
 login:
 	aws sso login --profile $(AWS_PROFILE)
@@ -37,3 +37,5 @@ docs:
 			terraform-docs markdown table --output-file README.md --output-mode replace "$$module"; \
 		fi; \
 	done
+
+check: fmt lint validate

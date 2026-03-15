@@ -13,6 +13,11 @@ variable "env" {
   type        = string
 }
 
+variable "service_role_name" {
+  description = "サービス内のロール名"
+  type        = string
+}
+
 variable "vpc_cidr_block" {
   description = "VPCのCIDRブロック"
   type        = string
