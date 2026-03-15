@@ -5,18 +5,18 @@
   "networkConfiguration": {
     "awsvpcConfiguration": {
       "subnets": [
-        "{{ tfstate `module.vpc.aws_subnet.main[\"app-a\"].id` }}",
-        "{{ tfstate `module.vpc.aws_subnet.main[\"app-c\"].id` }}"
+        "{{ tfstate `module.vpc.subnet_ids_by_key.app[0]` }}",
+        "{{ tfstate `module.vpc.subnet_ids_by_key.app[1]` }}"
       ],
       "securityGroups": [
-        "{{ tfstate `module.service.aws_security_group.main.id` }}"
+        "{{ tfstate `module.service.security_group_id` }}"
       ],
       "assignPublicIp": "DISABLED"
     }
   },
   "loadBalancers": [
     {
-      "targetGroupArn": "{{ tfstate `module.alb.aws_lb_target_group.main.arn` }}",
+      "targetGroupArn": "{{ tfstate `module.alb.target_group_arn` }}",
       "containerName": "backend",
       "containerPort": 8080
     }

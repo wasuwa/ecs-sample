@@ -11,10 +11,11 @@ TF_MODULES_DIR := $(TF_ROOT)/modules
 TF_ENV_DIR := $(TF_ROOT)/environments/$(ENV)
 TF_VARS_FILE := terraform.tfvars
 BACKEND_FILE := backend.hcl
+ECSPRESSO_CONFIG := ecspresso/$(ENV)/ecspresso.yaml
 
 export AWS_PROFILE
 
-.PHONY: login init plan apply validate fmt lint docs check ecr-login image-build image-push
+.PHONY: login init plan apply validate fmt lint docs check ecr-login image-build image-push verify diff deploy status rollback
 
 login:
 	aws sso login --profile $(AWS_PROFILE)
@@ -43,6 +44,21 @@ docs:
 	done
 
 check: fmt lint validate
+
+verify:
+	ecspresso --config $(ECSPRESSO_CONFIG) verify
+
+diff:
+	ecspresso --config $(ECSPRESSO_CONFIG) diff
+
+deploy:
+	ecspresso --config $(ECSPRESSO_CONFIG) deploy
+
+status:
+	ecspresso --config $(ECSPRESSO_CONFIG) status
+
+rollback:
+	ecspresso --config $(ECSPRESSO_CONFIG) rollback
 
 ecr-login:
 	aws ecr get-login-password --region $(AWS_REGION) | docker login --username AWS --password-stdin $(ECR_REGISTRY)
