@@ -33,13 +33,15 @@ No modules.
 |------|-------------|------|---------|:--------:|
 | <a name="input_env"></a> [env](#input\_env) | 環境名(stg, prodなど) | `string` | n/a | yes |
 | <a name="input_service_name"></a> [service\_name](#input\_service\_name) | サービス名 | `string` | n/a | yes |
-| <a name="input_subnet_cidr_blocks"></a> [subnet\_cidr\_blocks](#input\_subnet\_cidr\_blocks) | サブネットごとのCIDRブロック | <pre>object({<br/>    private = map(object({<br/>      cidr_block        = string<br/>      availability_zone = string<br/>    }))<br/>  })</pre> | n/a | yes |
+| <a name="input_subnets"></a> [subnets](#input\_subnets) | サブネット定義 | <pre>map(object({<br/>    cidr_block        = string<br/>    availability_zone = string<br/>    key               = string<br/>  }))</pre> | n/a | yes |
 | <a name="input_vpc_cidr_block"></a> [vpc\_cidr\_block](#input\_vpc\_cidr\_block) | VPCに割り当てるCIDRブロック | `string` | `"10.0.0.0/16"` | no |
 
 ## Outputs
 
 | Name | Description |
 |------|-------------|
-| <a name="output_private_subnet_ids"></a> [private\_subnet\_ids](#output\_private\_subnet\_ids) | プライベートサブネットのID一覧 |
+| <a name="output_route_table_ids"></a> [route\_table\_ids](#output\_route\_table\_ids) | ルートテーブルIDのマップ |
+| <a name="output_subnet_cidr_blocks_by_key"></a> [subnet\_cidr\_blocks\_by\_key](#output\_subnet\_cidr\_blocks\_by\_key) | キーごとのサブネットCIDR一覧 |
+| <a name="output_subnet_ids_by_key"></a> [subnet\_ids\_by\_key](#output\_subnet\_ids\_by\_key) | キーごとのサブネットID一覧 |
 | <a name="output_vpc_id"></a> [vpc\_id](#output\_vpc\_id) | VPCのID |
 <!-- END_TF_DOCS -->

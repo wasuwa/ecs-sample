@@ -28,12 +28,11 @@ variable "vpc_cidr_block" {
   type        = string
 }
 
-variable "subnet_cidr_blocks" {
-  description = "サブネットのCIDRブロック"
-  type = object({
-    private = map(object({
-      cidr_block        = string
-      availability_zone = string
-    }))
-  })
+variable "subnets" {
+  description = "サブネット定義"
+  type = map(object({
+    cidr_block        = string
+    availability_zone = string
+    key               = string
+  }))
 }

@@ -19,40 +19,42 @@ variable "vpc_cidr_block" {
   }
 }
 
-variable "subnet_cidr_blocks" {
-  type = object({
-    private = map(object({
-      cidr_block        = string
-      availability_zone = string
-    }))
-  })
-  description = "サブネットごとのCIDRブロック"
-  # CIDRフォーマットのバリデーション
+variable "subnets" {
+  type = map(object({
+    cidr_block        = string
+    availability_zone = string
+    key               = string
+  }))
+  description = "サブネット定義"
+
   validation {
     condition = (
       length(
         setintersection([
-          for subnet in values(var.subnet_cidr_blocks.private) : (
+          for subnet in values(var.subnets) : (
             can(cidrhost(subnet.cidr_block, 0)) ? subnet.cidr_block : null
           )
           ], [
-          for subnet in values(var.subnet_cidr_blocks.private) : subnet.cidr_block
+          for subnet in values(var.subnets) : subnet.cidr_block
         ])
-      ) == length(var.subnet_cidr_blocks.private)
+      ) == length(var.subnets)
     )
-    error_message = "プライベートのCIDRブロックが不正な形式です"
+    error_message = "サブネットのCIDRブロックが不正な形式です"
   }
-  # 可用性確保のためのバリデーション
-  validation {
-    condition     = length(var.subnet_cidr_blocks.private) >= 2
-    error_message = "可用性を確保するためにプライベートのCIDRブロックは2個以上を指定してください"
-  }
-  # 指定されたAZが利用可能なAZのいずれかであることのバリデーション
+
   validation {
     condition = alltrue([
-      for subnet in values(var.subnet_cidr_blocks.private) :
+      for subnet in values(var.subnets) :
+      length(trimspace(subnet.key)) > 0
+    ])
+    error_message = "subnets.keyには空文字以外を指定してください"
+  }
+
+  validation {
+    condition = alltrue([
+      for subnet in values(var.subnets) :
       contains(data.aws_availability_zones.main.names, subnet.availability_zone)
     ])
-    error_message = "プライベートサブネットのavailability_zoneは利用可能なAZを指定してください"
+    error_message = "サブネットのavailability_zoneは利用可能なAZを指定してください"
   }
 }
