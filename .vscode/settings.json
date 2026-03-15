@@ -1,3 +1,10 @@
 {
-  "cSpell.words": ["chdir", "hostnames", "tflint", "tfstate", "tfvars"]
+  "cSpell.words": [
+    "buildx",
+    "chdir",
+    "hostnames",
+    "tflint",
+    "tfstate",
+    "tfvars"
+  ]
 }
