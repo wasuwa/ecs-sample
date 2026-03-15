@@ -12,3 +12,10 @@ module "ecr" {
   env               = var.env
   service_role_name = var.service_role_name
 }
+
+module "cluster" {
+  source                    = "../../modules/ecs/cluster"
+  service_name              = var.service_name
+  env                       = var.env
+  enable_container_insights = var.enable_container_insights
+}

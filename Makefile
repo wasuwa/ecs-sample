@@ -32,10 +32,8 @@ lint:
 	tflint --recursive --chdir=$(TF_ROOT)
 
 docs:
-	for module in $(TF_MODULES_DIR)/*; do \
-		if [ -d "$$module" ]; then \
-			terraform-docs markdown table --output-file README.md --output-mode replace "$$module"; \
-		fi; \
+	find $(TF_MODULES_DIR) -type f -name '*.tf' -exec dirname {} \; | sort -u | while read -r module; do \
+		terraform-docs markdown table --output-file README.md --output-mode replace "$$module"; \
 	done
 
 check: fmt lint validate

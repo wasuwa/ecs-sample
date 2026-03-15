@@ -18,6 +18,11 @@ variable "service_role_name" {
   type        = string
 }
 
+variable "enable_container_insights" {
+  description = "CloudWatch Container Insightsを有効化するか"
+  type        = bool
+}
+
 variable "vpc_cidr_block" {
   description = "VPCのCIDRブロック"
   type        = string
