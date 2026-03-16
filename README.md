@@ -2,18 +2,20 @@
 
 ECS Fargateで稼働するWeb APIサーバーのサンプル構成です。
 
-## 構成
+## インフラ構成
 
 このリポジトリでは、CloudFrontを公開入口にし、その背後にALBとECS Fargateを配置する構成を採用しています。
 
 アプリケーションはプライベートサブネット上で稼働します。
 
-主な通信経路は以下のとおりです。
+ユーザーがアプリケーションに到達するまでのサービスの流れは以下のとおりです。
 
-- 利用者はCloudFrontへHTTPSでアクセスします。
-- CloudFrontはVPC Origin経由でALBへHTTPで転送します。
-- 内部ALBはECS ServiceのタスクへHTTP:8080でルーティングします。
-- ECSタスクはVPC Endpoint経由でAmazon ECR、CloudWatch Logs、Amazon S3へアクセスします。
+1. ユーザーはインターネット経由でCloudFrontへHTTPSでアクセスします。
+2. CloudFrontはVPC Originとして設定したALBへリクエストを転送します。
+3. ALBは受信したリクエストをECS ServiceのタスクへHTTP:8080でルーティングします。
+4. ECSタスクで稼働するアプリケーションがリクエストを処理し、レスポンスを返します。
+
+また、ECSタスクはアプリケーションの運用に必要なAmazon ECR、CloudWatch Logs、Amazon S3へ、VPC Endpoint経由でアクセスします。
 
 ![疎通OK](images/ok.png)
 
