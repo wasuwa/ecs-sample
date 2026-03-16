@@ -14,6 +14,8 @@ ECS Fargateで稼働するWeb APIサーバーのサンプル構成です。
 - 内部ALBはECS ServiceのタスクへHTTP:8080でルーティングします。
 - ECSタスクはVPC Endpoint経由でAmazon ECR、CloudWatch Logs、Amazon S3へアクセスします。
 
+![疎通OK](images/ok.png)
+
 ## ディレクトリ構成
 
 - `terraform/`: VPC、サブネット、VPC Endpoint、ALB、ECS Cluster、ECR、CloudFrontなどのインフラを管理します。
