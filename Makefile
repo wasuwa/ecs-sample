@@ -16,7 +16,7 @@ ECSPRESSO_CONFIG := ecspresso/$(ENV)/ecspresso.yaml
 
 export AWS_PROFILE
 
-.PHONY: login init plan apply validate fmt lint docs check ecr-login image-build image-push verify diff deploy status rollback
+.PHONY: login init plan apply destroy validate fmt lint docs check ecr-login image-build image-push verify diff deploy status rollback
 
 login:
 	aws sso login --profile $(AWS_PROFILE)
@@ -29,6 +29,9 @@ plan:
 
 apply:
 	terraform -chdir=$(TF_ENV_DIR) apply -var-file=$(TF_VARS_FILE)
+
+destroy:
+	terraform -chdir=$(TF_ENV_DIR) destroy -var-file=$(TF_VARS_FILE)
 
 validate:
 	terraform -chdir=$(TF_ENV_DIR) validate
