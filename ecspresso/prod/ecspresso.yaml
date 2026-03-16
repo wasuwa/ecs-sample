@@ -1,0 +1,10 @@
+region: ap-northeast-1
+cluster: web-api-prod-cluster
+service: web-api-prod-service
+service_definition: service-def.json
+task_definition: task-def.json
+timeout: 10m
+plugins:
+  - name: tfstate
+    config:
+      url: s3://web-api-prod-terraform-tfstate/prod/terraform.tfstate
