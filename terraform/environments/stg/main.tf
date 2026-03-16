@@ -10,16 +10,16 @@ module "vpc" {
   subnets        = var.subnets
 }
 
-# module "vpc_endpoint" {
-#   source                  = "../../modules/vpc_endpoint"
-#   service_name            = var.service_name
-#   env                     = var.env
-#   region                  = var.region
-#   vpc_id                  = module.vpc.vpc_id
-#   interface_subnet_ids    = module.vpc.subnet_ids_by_key["endpoint"]
-#   gateway_route_table_ids = [module.vpc.route_table_ids["app"]]
-#   allowed_cidr_blocks     = module.vpc.subnet_cidr_blocks_by_key["app"]
-# }
+module "vpc_endpoint" {
+  source                  = "../../modules/vpc_endpoint"
+  service_name            = var.service_name
+  env                     = var.env
+  region                  = var.region
+  vpc_id                  = module.vpc.vpc_id
+  interface_subnet_ids    = module.vpc.subnet_ids_by_key["endpoint"]
+  gateway_route_table_ids = [module.vpc.route_table_ids["app"]]
+  allowed_cidr_blocks     = module.vpc.subnet_cidr_blocks_by_key["app"]
+}
 
 module "ecr" {
   source            = "../../modules/ecr"
@@ -57,11 +57,10 @@ module "service" {
   container_port        = var.container_port
 }
 
-# module "cloudfront" {
-#   source = "../../modules/cloudfront"
-
-#   service_name       = var.service_name
-#   env                = var.env
-#   origin_arn         = module.alb.load_balancer_arn
-#   origin_domain_name = module.alb.dns_name
-# }
+module "cloudfront" {
+  source = "../../modules/cloudfront"
+  service_name       = var.service_name
+  env                = var.env
+  origin_arn         = module.alb.load_balancer_arn
+  origin_domain_name = module.alb.dns_name
+}
