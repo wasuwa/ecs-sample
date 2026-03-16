@@ -18,9 +18,10 @@ variable "subnet_ids" {
   description = "ALBを配置するサブネットID一覧"
 }
 
-variable "allowed_ingress_cidr_blocks" {
+variable "allowed_ingress_prefix_list_ids" {
   type        = list(string)
-  description = "ALBへのHTTPアクセスを許可するCIDR一覧"
+  default     = []
+  description = "ALBへのHTTPアクセスを許可するprefix list ID一覧"
 }
 
 variable "target_port" {

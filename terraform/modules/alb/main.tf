@@ -3,12 +3,16 @@ resource "aws_security_group" "main" {
   description = "Security group for internal ALB"
   vpc_id      = var.vpc_id
 
-  ingress {
-    description = "Allow HTTP from allowed CIDR blocks"
-    from_port   = 80
-    to_port     = 80
-    protocol    = "tcp"
-    cidr_blocks = var.allowed_ingress_cidr_blocks
+  dynamic "ingress" {
+    for_each = length(var.allowed_ingress_prefix_list_ids) > 0 ? [var.allowed_ingress_prefix_list_ids] : []
+
+    content {
+      description     = "Allow HTTP from allowed prefix lists"
+      from_port       = 80
+      to_port         = 80
+      protocol        = "tcp"
+      prefix_list_ids = ingress.value
+    }
   }
 
   egress {

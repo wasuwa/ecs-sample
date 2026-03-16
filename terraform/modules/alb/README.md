@@ -29,7 +29,7 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_allowed_ingress_cidr_blocks"></a> [allowed\_ingress\_cidr\_blocks](#input\_allowed\_ingress\_cidr\_blocks) | ALBへのHTTPアクセスを許可するCIDR一覧 | `list(string)` | n/a | yes |
+| <a name="input_allowed_ingress_prefix_list_ids"></a> [allowed\_ingress\_prefix\_list\_ids](#input\_allowed\_ingress\_prefix\_list\_ids) | ALBへのHTTPアクセスを許可するprefix list ID一覧 | `list(string)` | `[]` | no |
 | <a name="input_env"></a> [env](#input\_env) | 環境名(stg, prodなど) | `string` | n/a | yes |
 | <a name="input_health_check_path"></a> [health\_check\_path](#input\_health\_check\_path) | ターゲットグループのヘルスチェックパス | `string` | n/a | yes |
 | <a name="input_service_name"></a> [service\_name](#input\_service\_name) | サービス名 | `string` | n/a | yes |
@@ -41,6 +41,8 @@ No modules.
 
 | Name | Description |
 |------|-------------|
+| <a name="output_dns_name"></a> [dns\_name](#output\_dns\_name) | ALBのDNS名 |
+| <a name="output_load_balancer_arn"></a> [load\_balancer\_arn](#output\_load\_balancer\_arn) | ALBのARN |
 | <a name="output_security_group_id"></a> [security\_group\_id](#output\_security\_group\_id) | ALB用セキュリティグループのID |
 | <a name="output_target_group_arn"></a> [target\_group\_arn](#output\_target\_group\_arn) | ALBターゲットグループのARN |
 <!-- END_TF_DOCS -->
