@@ -1,4 +1,8 @@
-FROM golang:1.26.1-alpine3.23 AS builder
+FROM --platform=$BUILDPLATFORM golang:1.26.1-alpine3.23 AS builder
+
+# docker buildx buildでビルドすると自動で渡される
+ARG TARGETOS
+ARG TARGETARCH
 
 WORKDIR /app
 
@@ -8,7 +12,7 @@ RUN go mod download
 
 COPY cmd/ cmd/
 
-RUN CGO_ENABLED=0 go build -o /server ./cmd/server
+RUN CGO_ENABLED=0 GOOS=$TARGETOS GOARCH=$TARGETARCH go build -o /server ./cmd/server
 
 FROM alpine:3.23
 

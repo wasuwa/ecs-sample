@@ -6,6 +6,7 @@ ECR_REPOSITORY ?= web-api-$(ENV)-backend
 ECR_REGISTRY ?= $(AWS_ACCOUNT_ID).dkr.ecr.$(AWS_REGION).amazonaws.com
 IMAGE_TAG ?= $(shell git rev-parse --short HEAD)
 IMAGE_URI ?= $(ECR_REGISTRY)/$(ECR_REPOSITORY):$(IMAGE_TAG)
+IMAGE_PLATFORM ?= linux/arm64
 TF_ROOT := terraform
 TF_MODULES_DIR := $(TF_ROOT)/modules
 TF_ENV_DIR := $(TF_ROOT)/environments/$(ENV)
@@ -64,7 +65,7 @@ ecr-login:
 	aws ecr get-login-password --region $(AWS_REGION) | docker login --username AWS --password-stdin $(ECR_REGISTRY)
 
 image-build:
-	docker buildx build -t $(IMAGE_URI) .
+	docker buildx build --platform $(IMAGE_PLATFORM) -t $(IMAGE_URI) .
 
 image-push: ecr-login image-build
 	docker image push $(IMAGE_URI)
