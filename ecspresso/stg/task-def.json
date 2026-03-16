@@ -8,13 +8,13 @@
   },
   "cpu": "256",
   "memory": "512",
-  "executionRoleArn": "{{ tfstate `module.service.execution_role_arn` }}",
-  "taskRoleArn": "{{ tfstate `module.service.task_role_arn` }}",
+  "executionRoleArn": "{{ tfstate `module.service.aws_iam_role.execution.arn` }}",
+  "taskRoleArn": "{{ tfstate `module.service.aws_iam_role.task.arn` }}",
   "containerDefinitions": [
     {
       "name": "backend",
       "essential": true,
-      "image": "{{ tfstate `module.ecr.repository_url` }}:{{ must_env `IMAGE_TAG` }}",
+      "image": "{{ tfstate `module.ecr.aws_ecr_repository.main.repository_url` }}:{{ must_env `IMAGE_TAG` }}",
       "readonlyRootFilesystem": true,
       "environment": [
         {
@@ -31,7 +31,7 @@
       "logConfiguration": {
         "logDriver": "awslogs",
         "options": {
-          "awslogs-group": "{{ tfstate `module.service.log_group_name` }}",
+          "awslogs-group": "{{ tfstate `module.service.aws_cloudwatch_log_group.main.name` }}",
           "awslogs-region": "ap-northeast-1",
           "awslogs-stream-prefix": "backend"
         }
