@@ -4,6 +4,8 @@ ECS Fargateで稼働するWeb APIサーバーのサンプル構成です。
 
 ## インフラ構成
 
+![アーキテクチャ](images/architecture.png)
+
 このリポジトリでは、CloudFrontを公開入口にし、その背後にALBとECS Fargateを配置する構成を採用しています。
 
 アプリケーションはプライベートサブネット上で稼働します。
