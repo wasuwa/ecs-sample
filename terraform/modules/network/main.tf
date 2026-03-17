@@ -43,12 +43,3 @@ resource "aws_route_table_association" "main" {
   route_table_id = aws_route_table.main[each.value.key].id
   subnet_id      = aws_subnet.main[each.key].id
 }
-
-resource "aws_internet_gateway" "main" {
-  vpc_id = aws_vpc.main.id
-
-  tags = {
-    Name = "${var.service_name}-${var.env}-igw"
-    Env  = var.env
-  }
-}
