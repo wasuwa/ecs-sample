@@ -20,7 +20,6 @@ No modules.
 
 | Name | Type |
 |------|------|
-| [aws_internet_gateway.main](https://registry.terraform.io/providers/hashicorp/aws/6.36.0/docs/resources/internet_gateway) | resource |
 | [aws_route_table.main](https://registry.terraform.io/providers/hashicorp/aws/6.36.0/docs/resources/route_table) | resource |
 | [aws_route_table_association.main](https://registry.terraform.io/providers/hashicorp/aws/6.36.0/docs/resources/route_table_association) | resource |
 | [aws_subnet.main](https://registry.terraform.io/providers/hashicorp/aws/6.36.0/docs/resources/subnet) | resource |
